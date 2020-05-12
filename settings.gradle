@@ -1,0 +1,2 @@
+include ':demo', ':androidapimodule'
+rootProject.name='Android Api Client'
