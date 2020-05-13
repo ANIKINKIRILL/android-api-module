@@ -34,15 +34,17 @@
             android:id="@+id/answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ответ: "
+            android:text="Answer: "
             android:textIsSelectable="true"/>
         <EditText
             android:id="@+id/textAnswer"
             android:layout_below="@+id/answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ответ"
-            android:lines="4"/>
+            android:text="answer"
+            android:lines="4"
+            android:cursorVisible="false"
+            android:editable="false"/>
         <TextView
             android:layout_centerHorizontal="true"
             android:layout_below="@id/textAnswer"
@@ -57,7 +59,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="curl "
-            android:lines="4"/>
+            android:lines="4"
+            android:cursorVisible="false"
+            android:editable="false"/>
         <TextView
             android:layout_centerHorizontal="true"
             android:layout_below="@id/textCurl"
@@ -72,6 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="url "
-            android:lines="4"/>
+            android:lines="4"
+            android:cursorVisible="false"
+            android:editable="false"/>
     </RelativeLayout>/
 </RelativeLayout>

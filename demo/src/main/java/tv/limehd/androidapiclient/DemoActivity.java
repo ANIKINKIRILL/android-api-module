@@ -1,9 +1,14 @@
 package tv.limehd.androidapiclient;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,15 +40,52 @@ public class DemoActivity extends Activity implements LimeApiClient.DownloadChan
     private EditText curlTextView;
     private EditText urlTextView;
 
+
+    private void findViewId()
+    {
+        answerTextView = findViewById(R.id.textAnswer);
+        curlTextView = findViewById(R.id.textCurl);
+        urlTextView = findViewById(R.id.textUrl);
+    }
+    private void setOnClickListener()
+    {
+        answerTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getApplication().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", answerTextView.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "answer was copied", Toast.LENGTH_SHORT).show();
+            }
+        });
+        curlTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getApplication().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", curlTextView.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "curl was copied", Toast.LENGTH_SHORT).show();
+            }
+        });
+        urlTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClipboardManager clipboard = (ClipboardManager) getApplication().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", urlTextView.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "url request was copied", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
-        answerTextView = findViewById(R.id.textAnswer);
-        curlTextView = findViewById(R.id.textCurl);
-        urlTextView = findViewById(R.id.textUrl);
 
-        //инициализация апи клиента
+        findViewId();
+        setOnClickListener();
+
+    //инициализация апи клиента
         limeApiClient = new LimeApiClient(api_root);
 
         //инициализация апи значений
