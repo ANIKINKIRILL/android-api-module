@@ -45,6 +45,7 @@ public class ChannelListDownloading {
                 });
             }
         }).start();
+        callBackDownloadChannelListInterface.callBackRequestChannelList(LimeUri.getUriChannelList(scheme, api_root, endpoint_channels));
     }
 
 
@@ -52,6 +53,8 @@ public class ChannelListDownloading {
         void callBackDownloadedChannelListSuccess(String response);
 
         void callBackDownloadedChannelListError(String error_message);
+
+        void callBackRequestChannelList(String request);
     }
 
     private CallBackDownloadChannelListInterface callBackDownloadChannelListInterface;

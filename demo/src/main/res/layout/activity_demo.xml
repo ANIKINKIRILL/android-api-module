@@ -1,11 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/root">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/helloLimeApi"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello lime api"/>
-
-</LinearLayout>
+        android:background="#CCCCCC">
+        <TextView
+            android:layout_margin="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello lime api"
+            android:textSize="15sp"
+            />
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/helloLimeApi"
+        android:layout_above="@+id/logs"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E4E4E4" />
+    <RelativeLayout
+        android:id="@+id/logs"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="400dp">
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ответ: "
+            android:textIsSelectable="true"/>
+        <EditText
+            android:id="@+id/textAnswer"
+            android:layout_below="@+id/answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ответ"
+            android:lines="4"/>
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textAnswer"
+            android:id="@+id/curl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Curl: "
+            android:textIsSelectable="true"/>
+        <EditText
+            android:id="@+id/textCurl"
+            android:layout_below="@+id/textAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="curl "
+            android:lines="4"/>
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/textCurl"
+            android:id="@+id/url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="URL Request: "
+            android:textIsSelectable="true"/>
+        <EditText
+            android:id="@+id/textUrl"
+            android:layout_below="@+id/url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="url "
+            android:lines="4"/>
+    </RelativeLayout>/
+</RelativeLayout>

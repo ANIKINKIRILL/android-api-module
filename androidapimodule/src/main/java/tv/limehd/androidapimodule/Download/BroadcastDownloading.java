@@ -1,10 +1,9 @@
 package tv.limehd.androidapimodule.Download;
 
-import android.util.Log;
-
 import java.io.IOException;
 
 import androidx.annotation.NonNull;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -49,6 +48,8 @@ public class BroadcastDownloading {
                 });
             }
         }).start();
+        callBackDownloadBroadCastInterface.callBackRequestBroadCast(LimeUri.getUriBroadcast(scheme, api_root, endpoint_broadcast, channel_id
+                , before_date, after_date, time_zone));
     }
 
 
@@ -56,6 +57,8 @@ public class BroadcastDownloading {
         void callBackDownloadedBroadCastSucces(String response);
 
         void callBackDownloadedBroadCastError(String error_message);
+
+        void callBackRequestBroadCast(String request);
     }
 
     private CallBackDownloadBroadCastInterface callBackDownloadBroadCastInterface;

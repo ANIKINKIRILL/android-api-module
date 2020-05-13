@@ -9,4 +9,5 @@ class ApiValues{
     val URL_STREAMINGS_PATH = "v1/streams"
     val URL_REDIRECT_PATH = "redirect"
     val URL_BROADCAST_PATH = "v1/broadcasts"
+    val URL_PING_PATH = "v1/ping"
 }

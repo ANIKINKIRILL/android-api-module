@@ -44,11 +44,16 @@ public class PingApi {
                 });
             }
         }).start();
+        if (callBackPing != null)
+            callBackPing.callBackRequest(LimeUri.getUriChannelList(scheme, api_root, endpoint_ping));
     }
 
-    public interface CallBackPing{
+    public interface CallBackPing {
         void callBackSuccess(String response);
+
         void callBackError(String message);
+
+        void callBackRequest(String request);
     }
 
     private CallBackPing callBackPing;
