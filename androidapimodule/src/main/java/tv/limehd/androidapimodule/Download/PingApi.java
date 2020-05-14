@@ -29,8 +29,8 @@ public class PingApi {
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        if (callBackPing != null)
-                            callBackPing.callBackError(e.getMessage());
+                        if (callBackPingInterface != null)
+                            callBackPingInterface.callBackError(e.getMessage());
                     }
 
                     @Override
@@ -38,22 +38,34 @@ public class PingApi {
                         if (!response.isSuccessful()) {
                             throw new IOException("Unexpected code " + response);
                         }
-                        if (callBackPing != null)
-                            callBackPing.callBackSuccess(response.body().string());
+                        if (callBackPingInterface != null)
+                            callBackPingInterface.callBackSuccess(response.body().string());
                     }
                 });
             }
         }).start();
+        if (callBackPingRequestInterface != null)
+            callBackPingRequestInterface.callBackRequest(LimeUri.getUriChannelList(scheme, api_root, endpoint_ping));
     }
 
-    public interface CallBackPing{
+    public interface CallBackPingInterface {
         void callBackSuccess(String response);
+
         void callBackError(String message);
     }
 
-    private CallBackPing callBackPing;
+    public interface CallBackPingRequestInterface {
+        void callBackRequest(String request);
+    }
 
-    public void setCallBackPing(CallBackPing callBackPing) {
-        this.callBackPing = callBackPing;
+    private CallBackPingInterface callBackPingInterface;
+    private CallBackPingRequestInterface callBackPingRequestInterface;
+
+    public void setCallBackPingInterface(CallBackPingInterface callBackPingInterface) {
+        this.callBackPingInterface = callBackPingInterface;
+    }
+
+    public void setCallBackPingRequestInterface(CallBackPingRequestInterface callBackPingRequestInterface) {
+        this.callBackPingRequestInterface = callBackPingRequestInterface;
     }
 }

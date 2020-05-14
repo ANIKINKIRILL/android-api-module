@@ -1,6 +1,7 @@
 package tv.limehd.androidapimodule.Download;
 
 import androidx.annotation.NonNull;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -45,8 +46,9 @@ public class ChannelListDownloading {
                 });
             }
         }).start();
+        if (callBackRequestChannelListInterface != null)
+            callBackRequestChannelListInterface.callBackRequestChannelList(LimeUri.getUriChannelList(scheme, api_root, endpoint_channels));
     }
-
 
     public interface CallBackDownloadChannelListInterface {
         void callBackDownloadedChannelListSuccess(String response);
@@ -54,9 +56,18 @@ public class ChannelListDownloading {
         void callBackDownloadedChannelListError(String error_message);
     }
 
+    public interface CallBackRequestChannelListInterface {
+        void callBackRequestChannelList(String request);
+    }
+
     private CallBackDownloadChannelListInterface callBackDownloadChannelListInterface;
+    private CallBackRequestChannelListInterface callBackRequestChannelListInterface;
 
     public void setCallBackDownloadChannelListInterface(CallBackDownloadChannelListInterface callBackDownloadChannelListInterface) {
         this.callBackDownloadChannelListInterface = callBackDownloadChannelListInterface;
+    }
+
+    public void setCallBackRequestChannelListInterface(CallBackRequestChannelListInterface callBackRequestChannelListInterface) {
+        this.callBackRequestChannelListInterface = callBackRequestChannelListInterface;
     }
 }
