@@ -48,8 +48,9 @@ public class BroadcastDownloading {
                 });
             }
         }).start();
-        callBackDownloadBroadCastInterface.callBackRequestBroadCast(LimeUri.getUriBroadcast(scheme, api_root, endpoint_broadcast, channel_id
-                , before_date, after_date, time_zone));
+        if (callBackRequestBroadCastInterface != null)
+            callBackRequestBroadCastInterface.callBackRequestBroadCast(LimeUri.getUriBroadcast(scheme, api_root, endpoint_broadcast, channel_id
+                    , before_date, after_date, time_zone));
     }
 
 
@@ -57,13 +58,20 @@ public class BroadcastDownloading {
         void callBackDownloadedBroadCastSucces(String response);
 
         void callBackDownloadedBroadCastError(String error_message);
+    }
 
+    public interface CallBackRequestBroadCastInterface {
         void callBackRequestBroadCast(String request);
     }
 
     private CallBackDownloadBroadCastInterface callBackDownloadBroadCastInterface;
+    private CallBackRequestBroadCastInterface callBackRequestBroadCastInterface;
 
     public void setCallBackDownloadBroadCastInterface(CallBackDownloadBroadCastInterface callBackDownloadBroadCastInterface) {
         this.callBackDownloadBroadCastInterface = callBackDownloadBroadCastInterface;
+    }
+
+    public void setCallBackRequestBroadCastInterface(CallBackRequestBroadCastInterface callBackRequestBroadCastInterface) {
+        this.callBackRequestBroadCastInterface = callBackRequestBroadCastInterface;
     }
 }

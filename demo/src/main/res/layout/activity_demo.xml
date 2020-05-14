@@ -13,7 +13,7 @@
             android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello lime api"
+            android:text="@string/hello_lime_api"
             android:textSize="15sp"
             />
     </RelativeLayout>
@@ -23,7 +23,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#E4E4E4" />
+        android:background="#FFFFFF" />
     <RelativeLayout
         android:id="@+id/logs"
         android:layout_alignParentBottom="true"
@@ -34,14 +34,14 @@
             android:id="@+id/answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Answer: "
+            android:text="@string/answer"
             android:textIsSelectable="true"/>
         <EditText
             android:id="@+id/textAnswer"
             android:layout_below="@+id/answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="answer"
+            android:text="@string/answer"
             android:lines="4"
             android:cursorVisible="false"
             android:editable="false"/>
@@ -51,14 +51,14 @@
             android:id="@+id/curl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Curl: "
+            android:text="@string/curl"
             android:textIsSelectable="true"/>
         <EditText
             android:id="@+id/textCurl"
             android:layout_below="@+id/textAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="curl "
+            android:text="@string/curl"
             android:lines="4"
             android:cursorVisible="false"
             android:editable="false"/>
@@ -68,14 +68,14 @@
             android:id="@+id/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="URL Request: "
+            android:text="@string/url_request"
             android:textIsSelectable="true"/>
         <EditText
             android:id="@+id/textUrl"
             android:layout_below="@+id/url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="url "
+            android:text="@string/url_request"
             android:lines="4"
             android:cursorVisible="false"
             android:editable="false"/>

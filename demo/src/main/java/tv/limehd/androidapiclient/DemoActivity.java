@@ -41,21 +41,21 @@ public class DemoActivity extends Activity implements LimeApiClient.DownloadChan
     private EditText urlTextView;
 
 
-    private void findViewId()
-    {
+    private void findViewId() {
         answerTextView = findViewById(R.id.textAnswer);
         curlTextView = findViewById(R.id.textCurl);
         urlTextView = findViewById(R.id.textUrl);
+        recyclerView = findViewById(R.id.recyclerView);
     }
-    private void setOnClickListener()
-    {
+
+    private void setOnClickListener() {
         answerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ClipboardManager clipboard = (ClipboardManager) getApplication().getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", answerTextView.getText().toString());
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), "answer was copied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.answer_was_copied), Toast.LENGTH_SHORT).show();
             }
         });
         curlTextView.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,7 @@ public class DemoActivity extends Activity implements LimeApiClient.DownloadChan
                 ClipboardManager clipboard = (ClipboardManager) getApplication().getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", curlTextView.getText().toString());
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), "curl was copied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.curl_was_copied), Toast.LENGTH_SHORT).show();
             }
         });
         urlTextView.setOnClickListener(new View.OnClickListener() {
@@ -73,10 +73,41 @@ public class DemoActivity extends Activity implements LimeApiClient.DownloadChan
                 ClipboardManager clipboard = (ClipboardManager) getApplication().getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", urlTextView.getText().toString());
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), "url request was copied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.url_request_was_copied), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private void setCallBackRequests() {
+        //Интерфейс для получения отправленного запроса у пинга
+        limeApiClient.setRequestPingCallBack(new LimeApiClient.RequestCallBack() {
+            @Override
+            public void callBackRequest(String request) {
+                Log.e(LIME_LOG, request);
+                printCurl(getResources().getString(R.string.curl_request_2) + request + "'");
+                printUrlRequest(request);
+            }
+        });
+        //Интерфейс для получения отправленного запроса у телепередачи
+        limeApiClient.setRequestBroadCastCallBack(new LimeApiClient.RequestCallBack() {
+            @Override
+            public void callBackRequest(String request) {
+                Log.e(LIME_LOG, request);
+                printCurl(getResources().getString(R.string.curl_request_1) + request + "'");
+                printUrlRequest(request);
+            }
+        });
+        //Интерфейс для получения отправленного запроса у списка каналов
+        limeApiClient.setRequestChannelList(new LimeApiClient.RequestCallBack() {
+            @Override
+            public void callBackRequest(String request) {
+                Log.e(LIME_LOG, request);
+                printCurl(getResources().getString(R.string.curl_request_1) + request + "'");
+                printUrlRequest(request);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +116,7 @@ public class DemoActivity extends Activity implements LimeApiClient.DownloadChan
         findViewId();
         setOnClickListener();
 
-    //инициализация апи клиента
+        //инициализация апи клиента
         limeApiClient = new LimeApiClient(api_root);
 
         //инициализация апи значений
@@ -95,19 +126,19 @@ public class DemoActivity extends Activity implements LimeApiClient.DownloadChan
         limeApiClient.setDownloadBroadCastCallBack(this);
         limeApiClient.setDownloadPingCallBack(this);
 
+        setCallBackRequests();
+
         //инициализация даты для запроса по формату RFC3339
         long current_time_stamp = System.currentTimeMillis();//текущее время
         final long before_date = current_time_stamp - five_days_stamp;//левая граница - 5 дней
         final long after_date = current_time_stamp + five_days_stamp;//правая граница + 5 дней
-
-        recyclerView = findViewById(R.id.recyclerView);
-
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         ApiAdapter apiAdapter = new ApiAdapter(getApplicationContext());
         apiAdapter.setApiAdapterInterface(new ApiAdapter.ApiAdapterInterface() {
             @Override
             public void onClickPing() {
+                //запрос пинга
                 limeApiClient.downloadPing(apiValues.getSCHEME_HTTP(), apiValues.getURL_PING_PATH());
             }
 
@@ -194,26 +225,5 @@ public class DemoActivity extends Activity implements LimeApiClient.DownloadChan
     public void downloadPingError(String message) {
         Log.e(LIME_LOG, message);
         printAnswer(message);
-    }
-
-    @Override
-    public void downloadBroadCastRequest(String request) {
-        Log.e(LIME_LOG, request);
-        printCurl("curl -X GET --header 'Accept: application/vnd.api+json' '" + request + "'");
-        printUrlRequest(request);
-    }
-
-    @Override
-    public void downloadChannelListRequest(String request) {
-        Log.e(LIME_LOG, request);
-        printCurl("curl -X GET --header 'Accept: application/vnd.api+json' '" + request + "'");
-        printUrlRequest(request);
-    }
-
-    @Override
-    public void downloadPingRequest(String request) {
-        Log.e(LIME_LOG, request);
-        printCurl("curl -X GET --header 'Accept: application/json' '" + request + "'");
-        printUrlRequest(request);
     }
 }

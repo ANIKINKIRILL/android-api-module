@@ -12,8 +12,8 @@ public class LimeApiClient {
 
     /*Download channel List*/
     //region Download channel List
-    public void downloadChannelList(String scheme, String endpoint_channels ) {
-        if (api_root != null){
+    public void downloadChannelList(String scheme, String endpoint_channels) {
+        if (api_root != null) {
             ClientDownloading clientDownloading = new ClientDownloading();
             clientDownloading.setCallBackDownloadInterface(new ClientDownloading.CallBackDownloadInterface() {
                 @Override
@@ -27,11 +27,12 @@ public class LimeApiClient {
                     if (downloadChannelListCallBack != null)
                         downloadChannelListCallBack.downloadChannelListError(error_message);
                 }
-
+            });
+            clientDownloading.setCallBackRequestInterface(new ClientDownloading.CallBackRequestInterface() {
                 @Override
-                public void callBackDowloadedRequest(String request) {
-                    if(downloadChannelListCallBack != null)
-                        downloadChannelListCallBack.downloadChannelListRequest(request);
+                public void callBackRequest(String request) {
+                    if (requestChannelList != null)
+                        requestChannelList.callBackRequest(request);
                 }
             });
             clientDownloading.downloadChannelList(scheme, api_root, endpoint_channels);
@@ -40,8 +41,8 @@ public class LimeApiClient {
 
     public interface DownloadChannelListCallBack {
         void downloadChannelListSuccess(String response);
+
         void downloadChannelListError(String message);
-        void downloadChannelListRequest(String request);
     }
 
     private DownloadChannelListCallBack downloadChannelListCallBack;
@@ -68,21 +69,22 @@ public class LimeApiClient {
                     if (downloadBroadCastCallBack != null)
                         downloadBroadCastCallBack.downloadBroadCastError(error_message);
                 }
-
+            });
+            clientDownloading.setCallBackRequestInterface(new ClientDownloading.CallBackRequestInterface() {
                 @Override
-                public void callBackDowloadedRequest(String request) {
-                    if(downloadBroadCastCallBack != null)
-                        downloadBroadCastCallBack.downloadBroadCastRequest(request);
+                public void callBackRequest(String request) {
+                    if (requestBroadCastCallBack != null)
+                        requestBroadCastCallBack.callBackRequest(request);
                 }
             });
             clientDownloading.downloadBroadCast(scheme, api_root, endpoint_broadcast, channel_id, before_date, after_date, time_zone);
         }
     }
 
-    public interface DownloadBroadCastCallBack{
+    public interface DownloadBroadCastCallBack {
         void downloadBroadCastSuccess(String response);
+
         void downloadBroadCastError(String message);
-        void downloadBroadCastRequest(String request);
     }
 
     private DownloadBroadCastCallBack downloadBroadCastCallBack;
@@ -93,44 +95,65 @@ public class LimeApiClient {
     //endregion
 
     //region Download ping
-    public void downloadPing(String scheme, String endpoint_ping)
-    {
-        if(api_root != null)
-        {
+    public void downloadPing(String scheme, String endpoint_ping) {
+        if (api_root != null) {
             ClientDownloading clientDownloading = new ClientDownloading();
             clientDownloading.setCallBackDownloadInterface(new ClientDownloading.CallBackDownloadInterface() {
                 @Override
                 public void callBackDownloadedSuccess(String response) {
-                    if(downloadPingCallBack != null)
+                    if (downloadPingCallBack != null)
                         downloadPingCallBack.downloadPingSuccess(response);
                 }
 
                 @Override
                 public void callBackDownloadedError(String error_message) {
-                    if(downloadPingCallBack != null)
+                    if (downloadPingCallBack != null)
                         downloadPingCallBack.downloadPingError(error_message);
                 }
-
+            });
+            clientDownloading.setCallBackRequestInterface(new ClientDownloading.CallBackRequestInterface() {
                 @Override
-                public void callBackDowloadedRequest(String request) {
-                    if(downloadPingCallBack != null)
-                        downloadPingCallBack.downloadPingRequest(request);
+                public void callBackRequest(String request) {
+                    if (requestPingCallBack != null)
+                        requestPingCallBack.callBackRequest(request);
                 }
             });
             clientDownloading.dowloadPing(scheme, api_root, endpoint_ping);
         }
     }
 
-    public interface DownloadPingCallBack{
+    public interface DownloadPingCallBack {
         void downloadPingSuccess(String response);
+
         void downloadPingError(String message);
-        void downloadPingRequest(String request);
     }
+
     private DownloadPingCallBack downloadPingCallBack;
 
     public void setDownloadPingCallBack(DownloadPingCallBack downloadPingCallBack) {
         this.downloadPingCallBack = downloadPingCallBack;
     }
+    //endregion
 
+    //region RequestCallBack
+    public interface RequestCallBack {
+        void callBackRequest(String request);
+    }
+
+    private RequestCallBack requestBroadCastCallBack;
+    private RequestCallBack requestPingCallBack;
+    private RequestCallBack requestChannelList;
+
+    public void setRequestBroadCastCallBack(RequestCallBack requestBroadCastCallBack) {
+        this.requestBroadCastCallBack = requestBroadCastCallBack;
+    }
+
+    public void setRequestPingCallBack(RequestCallBack requestPingCallBack) {
+        this.requestPingCallBack = requestPingCallBack;
+    }
+
+    public void setRequestChannelList(RequestCallBack requestChannelList) {
+        this.requestChannelList = requestChannelList;
+    }
     //endregion
 }

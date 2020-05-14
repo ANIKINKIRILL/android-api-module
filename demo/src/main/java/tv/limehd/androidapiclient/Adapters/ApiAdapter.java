@@ -13,10 +13,16 @@ import tv.limehd.androidapiclient.R;
 
 public class ApiAdapter extends RecyclerView.Adapter<ApiAdapter.ViewHolder> {
     private LayoutInflater layoutInflater;
-    private String[] functionNames = new String[]{"Ping", "Download Channel List", "Download Broadcast"};
+    private String[] functionNames;
 
     public ApiAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
+        functionNames = new String[]{
+                context.getResources().getString(R.string.button_ping),
+                context.getResources().getString(R.string.button_download_channel_list),
+                context.getResources().getString(R.string.button_download_broadcast)
+        };
+
     }
 
     @NonNull

@@ -24,11 +24,12 @@ public class ClientDownloading {
                 if (callBackDownloadInterface != null)
                     callBackDownloadInterface.callBackDownloadedError(error_message);
             }
-
+        });
+        channelListDownloading.setCallBackRequestChannelListInterface(new ChannelListDownloading.CallBackRequestChannelListInterface() {
             @Override
             public void callBackRequestChannelList(String request) {
-                if (callBackDownloadInterface != null)
-                    callBackDownloadInterface.callBackDowloadedRequest(request);
+                if (callBackRequestInterface != null)
+                    callBackRequestInterface.callBackRequest(request);
             }
         });
         channelListDownloading.loadingRequestChannelList(scheme, api_root, endpoint_channels);
@@ -49,50 +50,61 @@ public class ClientDownloading {
                 if (callBackDownloadInterface != null)
                     callBackDownloadInterface.callBackDownloadedError(error_message);
             }
-
+        });
+        broadcastDownloading.setCallBackRequestBroadCastInterface(new BroadcastDownloading.CallBackRequestBroadCastInterface() {
             @Override
             public void callBackRequestBroadCast(String request) {
-                if (callBackDownloadInterface != null)
-                    callBackDownloadInterface.callBackDowloadedRequest(request);
+                if (callBackRequestInterface != null)
+                    callBackRequestInterface.callBackRequest(request);
             }
         });
         broadcastDownloading.loadingRequestBroadCast(scheme, api_root, endpoint_broadcast, channel_id, before_date, after_date, time_zone);
     }
-    public void dowloadPing(String scheme, String api_root, String endpoint_ping)
-    {
+
+    public void dowloadPing(String scheme, String api_root, String endpoint_ping) {
         PingApi pingApi = new PingApi();
-        pingApi.setCallBackPing(new PingApi.CallBackPing() {
+        pingApi.setCallBackPingInterface(new PingApi.CallBackPingInterface() {
             @Override
             public void callBackSuccess(String response) {
-                if(callBackDownloadInterface != null)
+                if (callBackDownloadInterface != null)
                     callBackDownloadInterface.callBackDownloadedSuccess(response);
             }
 
             @Override
             public void callBackError(String message) {
-                if(callBackDownloadInterface != null)
+                if (callBackDownloadInterface != null)
                     callBackDownloadInterface.callBackDownloadedError(message);
             }
-
+        });
+        pingApi.setCallBackPingRequestInterface(new PingApi.CallBackPingRequestInterface() {
             @Override
             public void callBackRequest(String request) {
-                if(callBackDownloadInterface != null)
-                    callBackDownloadInterface.callBackDowloadedRequest(request);
+                if (callBackRequestInterface != null)
+                    callBackRequestInterface.callBackRequest(request);
             }
         });
         pingApi.pingApiRequest(scheme, api_root, endpoint_ping);
     }
+
     public interface CallBackDownloadInterface {
         void callBackDownloadedSuccess(String response);
 
         void callBackDownloadedError(String error_message);
-
-        void callBackDowloadedRequest(String request);
     }
 
+    public interface CallBackRequestInterface {
+        void callBackRequest(String request);
+    }
+
+
     private CallBackDownloadInterface callBackDownloadInterface;
+    private CallBackRequestInterface callBackRequestInterface;
 
     public void setCallBackDownloadInterface(CallBackDownloadInterface callBackDownloadInterface) {
         this.callBackDownloadInterface = callBackDownloadInterface;
+    }
+
+    public void setCallBackRequestInterface(CallBackRequestInterface callBackRequestInterface) {
+        this.callBackRequestInterface = callBackRequestInterface;
     }
 }
