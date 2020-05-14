@@ -19,7 +19,7 @@ import tv.limehd.androidapimodule.LimeApiClient;
 import tv.limehd.androidapimodule.LimeRFC;
 import tv.limehd.androidapimodule.Values.ApiValues;
 
-public class DemoActivity extends Activity implements LimeApiClient.DownloadChannelListCallBack, LimeApiClient.DownloadBroadCastCallBack, LimeApiClient.DownloadPingCallBack {
+public class DemoActivity extends Activity  {
 
     private String LIME_LOG = "limeapilog";
     //экземпляр апи клиента для запросов
@@ -122,9 +122,39 @@ public class DemoActivity extends Activity implements LimeApiClient.DownloadChan
         //инициализация апи значений
         apiValues = new ApiValues();
 
-        limeApiClient.setDownloadChannelListCallBack(this);
-        limeApiClient.setDownloadBroadCastCallBack(this);
-        limeApiClient.setDownloadPingCallBack(this);
+        limeApiClient.setDownloadChannelListCallBack(new LimeApiClient.DownloadCallBack() {
+            @Override
+            public void downloadSuccess(String response) {
+                downloadChannelListSuccess(response);
+            }
+
+            @Override
+            public void downloadError(String message) {
+                downloadChannelListError(message);
+            }
+        });
+        limeApiClient.setDownloadBroadCastCallBack(new LimeApiClient.DownloadCallBack() {
+            @Override
+            public void downloadSuccess(String response) {
+                downloadBroadCastSuccess(response);
+            }
+
+            @Override
+            public void downloadError(String message) {
+                downloadBroadCastError(message);
+            }
+        });
+        limeApiClient.setDownloadPingCallBack(new LimeApiClient.DownloadCallBack() {
+            @Override
+            public void downloadSuccess(String response) {
+                downloadPingSuccess(response);
+            }
+
+            @Override
+            public void downloadError(String message) {
+                downloadPingSuccess(message);
+            }
+        });
 
         setCallBackRequests();
 
@@ -191,37 +221,31 @@ public class DemoActivity extends Activity implements LimeApiClient.DownloadChan
         });
     }
 
-    @Override
     public void downloadChannelListSuccess(String response) {
         Log.e(LIME_LOG, response);
         printAnswer(response);
     }
 
-    @Override
     public void downloadBroadCastSuccess(String response) {
         Log.e(LIME_LOG, response);
         printAnswer(response);
     }
 
-    @Override
     public void downloadPingSuccess(String response) {
         Log.e(LIME_LOG, response);
         printAnswer(response);
     }
 
-    @Override
     public void downloadChannelListError(String message) {
         Log.e(LIME_LOG, message);
         printAnswer(message);
     }
 
-    @Override
     public void downloadBroadCastError(String message) {
         Log.e(LIME_LOG, message);
         printAnswer(message);
     }
 
-    @Override
     public void downloadPingError(String message) {
         Log.e(LIME_LOG, message);
         printAnswer(message);

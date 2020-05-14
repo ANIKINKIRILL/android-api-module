@@ -19,13 +19,13 @@ public class LimeApiClient {
                 @Override
                 public void callBackDownloadedSuccess(String response) {
                     if (downloadChannelListCallBack != null)
-                        downloadChannelListCallBack.downloadChannelListSuccess(response);
+                        downloadChannelListCallBack.downloadSuccess(response);
                 }
 
                 @Override
                 public void callBackDownloadedError(String error_message) {
                     if (downloadChannelListCallBack != null)
-                        downloadChannelListCallBack.downloadChannelListError(error_message);
+                        downloadChannelListCallBack.downloadError(error_message);
                 }
             });
             clientDownloading.setCallBackRequestInterface(new ClientDownloading.CallBackRequestInterface() {
@@ -39,19 +39,6 @@ public class LimeApiClient {
         }
     }
 
-    public interface DownloadChannelListCallBack {
-        void downloadChannelListSuccess(String response);
-
-        void downloadChannelListError(String message);
-    }
-
-    private DownloadChannelListCallBack downloadChannelListCallBack;
-
-    public void setDownloadChannelListCallBack(DownloadChannelListCallBack downloadChannelListCallBack) {
-        this.downloadChannelListCallBack = downloadChannelListCallBack;
-    }
-    //endregion
-
     /*Download broadcast*/
     //region DownloadBroadcast
     public void downloadBroadcast(String scheme, String endpoint_broadcast, String channel_id, String before_date, String after_date, String time_zone) {
@@ -61,13 +48,13 @@ public class LimeApiClient {
                 @Override
                 public void callBackDownloadedSuccess(String response) {
                     if (downloadBroadCastCallBack != null)
-                        downloadBroadCastCallBack.downloadBroadCastSuccess(response);
+                        downloadBroadCastCallBack.downloadSuccess(response);
                 }
 
                 @Override
                 public void callBackDownloadedError(String error_message) {
                     if (downloadBroadCastCallBack != null)
-                        downloadBroadCastCallBack.downloadBroadCastError(error_message);
+                        downloadBroadCastCallBack.downloadError(error_message);
                 }
             });
             clientDownloading.setCallBackRequestInterface(new ClientDownloading.CallBackRequestInterface() {
@@ -81,19 +68,6 @@ public class LimeApiClient {
         }
     }
 
-    public interface DownloadBroadCastCallBack {
-        void downloadBroadCastSuccess(String response);
-
-        void downloadBroadCastError(String message);
-    }
-
-    private DownloadBroadCastCallBack downloadBroadCastCallBack;
-
-    public void setDownloadBroadCastCallBack(DownloadBroadCastCallBack downloadBroadCastCallBack) {
-        this.downloadBroadCastCallBack = downloadBroadCastCallBack;
-    }
-    //endregion
-
     //region Download ping
     public void downloadPing(String scheme, String endpoint_ping) {
         if (api_root != null) {
@@ -102,13 +76,13 @@ public class LimeApiClient {
                 @Override
                 public void callBackDownloadedSuccess(String response) {
                     if (downloadPingCallBack != null)
-                        downloadPingCallBack.downloadPingSuccess(response);
+                        downloadPingCallBack.downloadSuccess(response);
                 }
 
                 @Override
                 public void callBackDownloadedError(String error_message) {
                     if (downloadPingCallBack != null)
-                        downloadPingCallBack.downloadPingError(error_message);
+                        downloadPingCallBack.downloadError(error_message);
                 }
             });
             clientDownloading.setCallBackRequestInterface(new ClientDownloading.CallBackRequestInterface() {
@@ -121,19 +95,6 @@ public class LimeApiClient {
             clientDownloading.dowloadPing(scheme, api_root, endpoint_ping);
         }
     }
-
-    public interface DownloadPingCallBack {
-        void downloadPingSuccess(String response);
-
-        void downloadPingError(String message);
-    }
-
-    private DownloadPingCallBack downloadPingCallBack;
-
-    public void setDownloadPingCallBack(DownloadPingCallBack downloadPingCallBack) {
-        this.downloadPingCallBack = downloadPingCallBack;
-    }
-    //endregion
 
     //region RequestCallBack
     public interface RequestCallBack {
@@ -156,4 +117,28 @@ public class LimeApiClient {
         this.requestChannelList = requestChannelList;
     }
     //endregion
+
+    //region DownloadCallBack
+    //Используй для передачи полученных данных
+    public interface DownloadCallBack {
+        void downloadSuccess(String response);
+
+        void downloadError(String message);
+    }
+
+    private DownloadCallBack downloadPingCallBack;
+    private DownloadCallBack downloadChannelListCallBack;
+    private DownloadCallBack downloadBroadCastCallBack;
+
+    public void setDownloadPingCallBack(DownloadCallBack downloadPingCallBack) {
+        this.downloadPingCallBack = downloadPingCallBack;
+    }
+
+    public void setDownloadChannelListCallBack(DownloadCallBack downloadChannelListCallBack) {
+        this.downloadChannelListCallBack = downloadChannelListCallBack;
+    }
+
+    public void setDownloadBroadCastCallBack(DownloadCallBack downloadBroadCastCallBack) {
+        this.downloadBroadCastCallBack = downloadBroadCastCallBack;
+    }
 }

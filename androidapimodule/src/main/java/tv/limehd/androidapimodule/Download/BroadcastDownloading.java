@@ -43,7 +43,7 @@ public class BroadcastDownloading {
                             throw new IOException("Unexpected code " + response);
                         }
                         if (callBackDownloadBroadCastInterface != null)
-                            callBackDownloadBroadCastInterface.callBackDownloadedBroadCastSucces(response.body().string());
+                            callBackDownloadBroadCastInterface.callBackDownloadedBroadCastSuccess(response.body().string());
                     }
                 });
             }
@@ -53,9 +53,9 @@ public class BroadcastDownloading {
                     , before_date, after_date, time_zone));
     }
 
-
     public interface CallBackDownloadBroadCastInterface {
-        void callBackDownloadedBroadCastSucces(String response);
+
+        void callBackDownloadedBroadCastSuccess(String response);
 
         void callBackDownloadedBroadCastError(String error_message);
     }

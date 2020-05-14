@@ -40,7 +40,7 @@ public class ClientDownloading {
         BroadcastDownloading broadcastDownloading = new BroadcastDownloading();
         broadcastDownloading.setCallBackDownloadBroadCastInterface(new BroadcastDownloading.CallBackDownloadBroadCastInterface() {
             @Override
-            public void callBackDownloadedBroadCastSucces(String response) {
+            public void callBackDownloadedBroadCastSuccess(String response) {
                 if (callBackDownloadInterface != null)
                     callBackDownloadInterface.callBackDownloadedSuccess(response);
             }
