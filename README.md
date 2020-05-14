@@ -22,7 +22,7 @@ implementation project(':androidapimodule')
 ## Use
 
 ```
-String api_root = "api.iptv2021.com";
+String api_root = API_ROOT;
 
 LimeApiClient limeApiClient = new LimeApiClient(api_root);
 ApiValues apiValues = new ApiValues();
