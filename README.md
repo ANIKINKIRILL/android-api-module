@@ -1,25 +1,25 @@
 # Модуль для взаимодействия с API
 
-## Connecting module
+## Присоединение к модулю
 
-### 0. Clone repository uses git submodule
+### 0. Клонировать репозиторий при помощи git submodule
 
 git submodule add https://github.com/LimeHD/android-api-module
 
-### 1. Add module in project
-File-Project Structure-Modules
+### 1. Добавить модуль к проекту
+Файл-Структура Проекта-Модули
 
-Click + button
+Нажмите + кнопку
 
-1. Add module androidapimodule without DEMO module
-2. Demo module its a example application from uses androidapimodule
+1. Добавить модуль androidapimodule без DEMO модуля
+2. Demo модуль его пример приложения из использования androidapimodule
 
-### 2. Add to dependencies
+### 2. Добавить в dependencies
 
 implementation project(':androidapimodule')
 
 
-## Use
+## Использование
 
 ```
 String api_root = API_ROOT;
