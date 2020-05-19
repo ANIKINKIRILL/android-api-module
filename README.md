@@ -48,7 +48,7 @@ limeApiClient.setDownloadChannelListCallBack(new LimeApiClient.DownloadChannelLi
 });
 ```
 ### Настройка дат для получения программы передач
-``` java
+``` js
 String before_date = LimeRFC.timeStampToRFC(before_date_timestamp);
 String after_date = LimeRFC.timeStampToRFC(after_date_timestamp);
 ```
